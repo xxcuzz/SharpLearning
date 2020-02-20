@@ -6,16 +6,19 @@ using System.Reflection;
 namespace CodeBlog_Tasks {
     class Program {
         static void Main(string[] args) {
-            Console.WriteLine("Enter task number(--info): ");
+            //Console.WriteLine("Enter task number(--info): ");
 
             //int taskNumber = NumberInput();
             //string methodName = "Task" + taskNumber + "()";
             //MethodInfo mi = GetMethod(methodName);
             //mi?.Invoke();
-            Console.WriteLine("Task 314 316");
-        //Task314();
-        //Task316();
-    }
+            //Console.WriteLine("Task 314 316");
+
+            Task309();
+            //Task314();
+            //Task316();
+
+        }
 
         static int NumberInput() {
             int num;
@@ -25,15 +28,68 @@ namespace CodeBlog_Tasks {
             return num;
         }
 
+        static void OutputList(List<int> list) {
+            Console.Write("List: ");
+            foreach (var l in list) {
+                Console.Write(l + " ");
+            }
+            Console.WriteLine("");
+        }
 
-        #region Task309
+        #region Task309_Completed
         static void Task309() {
             /*Дано натуральное число N. Представить его в виде суммы двух
              * натуральных чисел таких, что  НОД этих чисел - максимален
              */
 
-
+            List<int> NodArray = new List<int>();
+            
+            Console.WriteLine("Введите натуральное число: ");
+            int n = PositiveInteger();
+           
+            NodArray = NodArrayCalculate(n, NodArray);
+            MaxNodCalculate(NodArray[0], n, out _, out _);     
         }
+
+        static void MaxNodCalculate(int na, int n, out int f, out int s) {
+            s = 0;
+            for(f=0; f<n/2; f++) { 
+                f = n - na;
+                s = n - f;
+                if (Nod(f, s) == na) {
+                    Console.WriteLine($"First number: {f}, second number: {s}");
+                }
+            }
+        }
+
+        static int Nod(int a, int b) {
+            for (int i = a; i > 0; i--) {
+                if (a % i == 0) {
+                    if (b % i == 0) {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
+        static List<int> NodArrayCalculate(int n, List<int> NodArray) {
+            for(int i = n/2; i > 0; i--) {
+                if (n % i == 0)
+                    NodArray.Add(i);
+            }
+            return NodArray;
+        }
+        
+
+        static int PositiveInteger() {
+            int n;
+            do {
+                n = NumberInput();
+            } while (n <= 0);
+
+            return n;
+        }
+
         #endregion
 
         #region Task310
@@ -77,11 +133,11 @@ namespace CodeBlog_Tasks {
         static List<int> DivisibilityBySeven(List<int> list) {
             List<int> DividedBySeven = new List<int>();
             int seven = 7;
-            foreach(var l in list) {
-                if(Convert.ToInt32(Convert.ToString(l),2) % seven == 0) {
+            foreach (var l in list) {
+                if (Convert.ToInt32(Convert.ToString(l), 2) % seven == 0) {
                     DividedBySeven.Add(l);
                 }
-            }          
+            }
             return DividedBySeven;
 
         }
@@ -96,20 +152,12 @@ namespace CodeBlog_Tasks {
 
                 if (Int32.TryParse(input, out int num) && IsBinary(input)) {
                     list.Add(num);
-                }   
+                }
             }
         }
 
         static bool IsBinary(string s) {
             return s.All(c => c == '1' || c == '0');
-        }
-
-        static void OutputList(List<int> list) {
-            Console.Write("List: ");
-            foreach (var l in list) {
-                Console.Write(l + " ");
-            }
-            Console.WriteLine("");
         }
 
         #endregion
