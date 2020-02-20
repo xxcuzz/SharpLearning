@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "events", "events\events.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "files", "files\files.csproj", "{B86AA45A-EC0C-4F35-BEB5-151508A9A152}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBlog Tasks", "CodeBlog Tasks\CodeBlog Tasks.csproj", "{51A90AF0-0306-4B0A-BC78-BA6268BC9321}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeBlog Tasks", "CodeBlog Tasks\CodeBlog Tasks.csproj", "{51A90AF0-0306-4B0A-BC78-BA6268BC9321}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQ Tasks", "LINQ Tasks\LINQ Tasks.csproj", "{CC8AA7DF-8F1F-4115-9791-15938E70868D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{51A90AF0-0306-4B0A-BC78-BA6268BC9321}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51A90AF0-0306-4B0A-BC78-BA6268BC9321}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51A90AF0-0306-4B0A-BC78-BA6268BC9321}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC8AA7DF-8F1F-4115-9791-15938E70868D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC8AA7DF-8F1F-4115-9791-15938E70868D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC8AA7DF-8F1F-4115-9791-15938E70868D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC8AA7DF-8F1F-4115-9791-15938E70868D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
