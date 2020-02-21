@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 /*
-
-LinqBegin2. Дана цифра D (однозначное целое число) и целочисленная последовательность A. Вывести первый положительный элемент последовательности A, оканчивающийся
-цифрой D. Если требуемых элементов в последовательности
-A нет, то вывести 0.
 LinqBegin3. Дано целое число L (> 0) и строковая последовательность A. Вывести последнюю строку из A, начинающуюся с цифры и имеющую длину L. Если требуемых строк в последовательности A нет, то вывести строку «Not found».
 Указание. Для обработки ситуации, связанной с отсутствием
 требуемых строк, использовать операцию ??.
@@ -34,7 +30,8 @@ LinqBegin9. Дана целочисленная последовательнос
 namespace LINQ_Tasks {
     class Program {
         static void Main(string[] args) {
-            Linq1();
+            //Linq1();
+            Linq2();
         }
 
         static void Linq1() {
@@ -44,24 +41,24 @@ namespace LINQ_Tasks {
              * последний отрицательный элемент.
              */
 
-            
+
             List<int> sequence = new List<int>();
 
             sequence = AddNumToList(sequence);
             OutputList<int>(sequence);
             Console.WriteLine("first positive: {0}, last nagative: {1}", sequence.First(i => i > 0), sequence.Last(i => i < 0));
 
-            
+
         }
 
         static List<int> AddNumToList(List<int> list) {
             Random rand = new Random();
-            for (int i =0; i < 15; i++) {
-                list.Add(rand.Next(-250,250));
+            for (int i = 0; i < 15; i++) {
+                list.Add(rand.Next(-250, 250));
             }
             return list;
         }
-        
+
         static void OutputList<T>(List<T> list) {
             Console.Write("List: ");
 
@@ -70,6 +67,25 @@ namespace LINQ_Tasks {
             }
 
             Console.WriteLine("");
+        }
+        static void Linq2() {
+            /*LinqBegin2.Дана цифра D(однозначное целое число) и
+             * целочисленная последовательность A.
+             * Вывести первый положительный элемент последовательности A,
+             * оканчивающийся цифрой D.
+             * Если требуемых элементов в последовательностиA нет, то вывести 0.
+             */
+
+            List<int> sequence = new List<int>();
+
+            sequence = AddNumToList(sequence);
+            OutputList<int>(sequence);
+            int n = Convert.ToInt32(Console.ReadLine());
+            Linq2_Inner(sequence, n);
+        }
+        static void Linq2_Inner(List<int> list, int n) {
+            var result = list.FirstOrDefault(i => (i%10 == n));
+            Console.WriteLine(result);
         }
     }
 }
