@@ -12,8 +12,8 @@ namespace LINQ_Tasks {
             //Linq5();
             //Linq6();
             //Linq7();
-            
             //Linq8();
+            
             //Linq9();
 
         }
@@ -46,7 +46,7 @@ namespace LINQ_Tasks {
         }
 
         static void OutputList<T>(List<T> list) {
-            string str = null;        
+            string str = null;
 
             foreach (var v in list) {
                 str += v + ", ";
@@ -177,7 +177,7 @@ namespace LINQ_Tasks {
                 list.Add(strArray[i]);
             }
 
-            int result = list.Where(s=>s.Length>1 && s.EndsWith(c)).Count();
+            int result = list.Where(s => s.Length > 1 && s.EndsWith(c)).Count();
 
             Console.WriteLine(result);
 
@@ -201,8 +201,8 @@ namespace LINQ_Tasks {
                 list.Add(strArray[i]);
             }
 
-            string concat = list.Aggregate((s,ss) => s + ss);
-            int fullLength = list.Sum(s=>s.Length);
+            string concat = list.Aggregate((s, ss) => s + ss);
+            int fullLength = list.Sum(s => s.Length);
 
             Console.WriteLine("Сумма как конкатенация: {0}\n" +
                 "Сумма как общая длина строк: {1}", concat, fullLength);
@@ -220,11 +220,11 @@ namespace LINQ_Tasks {
 
             sequence = AddNumToList(sequence);
             //sequence.Add(10);
-            
+
             OutputList(sequence);
 
             int resCount = sequence.Where(i => i < 0).Count();
-            int resSum = sequence.Where(i=>i<0).Sum();
+            int resSum = sequence.Where(i => i < 0).Sum();
             if (resCount == 0) {
                 Console.WriteLine("0");
                 Console.WriteLine("0");
@@ -236,13 +236,33 @@ namespace LINQ_Tasks {
 
         #region Linq8
         /* Дана целочисленная последовательность. 
-         * Найтиколичество ее положительных двузначных элементов,
+         * Найти количество ее положительных двузначных элементов,
          * а также их среднее арифметическое (как вещественное число).
          * Если требуемые элементы отсутствуют, то дважды вывести 0
          * (первый раз как целое, второй — как вещественное).
          */
         static void Linq8() {
+            List<int> sequence = new List<int>();
 
+            sequence = AddNumToList(sequence);
+            //sequence.Add(-100);
+            //sequence.Add(0);
+            OutputList(sequence);
+
+            int resCount;
+            double resAvg;
+
+            resCount = sequence.Where(i => i > 0 && i / 10 < 10 && i / 10 > 0).Count();
+            if (resCount == 0) {
+                Console.WriteLine(0);
+                Console.WriteLine((double)0);
+            } else {
+                resAvg = sequence.Where(i => i > 0 && i / 10 < 10 && i / 10 > 0).Average();
+
+                Console.WriteLine("Положительные двузначеные.\n" +
+                    "Количество: {0}\n" +
+                    "Среднее арфметическое: {1}", resCount, resAvg);
+            }
         }
 
         #endregion
