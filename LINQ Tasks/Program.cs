@@ -11,8 +11,8 @@ namespace LINQ_Tasks {
             //Linq4();
             
             //Linq5();
-            Linq6();
-            //Linq7();
+            //Linq6();
+            Linq7();
             //Linq8();
             //Linq9();
 
@@ -190,7 +190,22 @@ namespace LINQ_Tasks {
          * Найти сумму длин всех строк, входящих в данную последовательность.
          */
         static void Linq6() {
+            Console.Write("Введите строки через пробелы: ");
 
+            char separator = ' ';
+            string[] strArray = Console.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+
+            List<string> list = new List<string>();
+
+            for (int i = 0; i < strArray.Length; i++) {
+                list.Add(strArray[i]);
+            }
+
+            string concat = list.Aggregate((s,ss) => s + ss);
+            int fullLength = list.Sum(s=>s.Length);
+
+            Console.WriteLine("Сумма как конкатенация: {0}\n" +
+                "Сумма как общая длина строк: {1}", concat, fullLength);
         }
         #endregion
 
