@@ -9,10 +9,10 @@ namespace LINQ_Tasks {
             //Linq2();
             //Linq3();
             //Linq4();
-            
             //Linq5();
             //Linq6();
-            Linq7();
+            //Linq7();
+            
             //Linq8();
             //Linq9();
 
@@ -46,13 +46,13 @@ namespace LINQ_Tasks {
         }
 
         static void OutputList<T>(List<T> list) {
-            Console.Write("List: ");
+            string str = null;        
 
             foreach (var v in list) {
-                Console.Write(v + ", ");
+                str += v + ", ";
             }
 
-            Console.WriteLine("");
+            Console.WriteLine("List: " + str.Substring(0, str.Length - 2));
         }
 
         #endregion
@@ -216,7 +216,21 @@ namespace LINQ_Tasks {
          */
 
         static void Linq7() {
+            List<int> sequence = new List<int>();
 
+            sequence = AddNumToList(sequence);
+            //sequence.Add(10);
+            
+            OutputList(sequence);
+
+            int resCount = sequence.Where(i => i < 0).Count();
+            int resSum = sequence.Where(i=>i<0).Sum();
+            if (resCount == 0) {
+                Console.WriteLine("0");
+                Console.WriteLine("0");
+            } else {
+                Console.WriteLine("Отрицательные элементы. Количество: {0}, Сумма: {1}", resCount, resSum);
+            }
         }
         #endregion
 
