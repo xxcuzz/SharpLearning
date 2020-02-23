@@ -18,6 +18,20 @@ namespace LINQ_Tasks {
 
         #region someMethods
 
+        static int EnterPositiveInteger() {
+            int n;
+            string input;
+
+            do {
+                Console.Write("Введите натуральное число: ");
+                input = Console.ReadLine();
+            } while (!IsPositiveInteger(input));
+
+            n = Convert.ToInt32(input);
+
+            return n;
+        }
+
         static int EnterDigit() {
             int num;
             string input;
@@ -27,14 +41,17 @@ namespace LINQ_Tasks {
             } while ((!Int32.TryParse(input, out num) && num < 10 && num > -1));
             return num;
         }
-        static int NumberInput() {
+
+        static bool IsPositiveInteger(string input) {
             int num;
-            string input;
-            while (!Int32.TryParse(Console.ReadLine(), out num)) {
-                Console.WriteLine("Введите число");
-                input = Console.ReadLine();
+            try {
+                num = Convert.ToInt32(input);
+            } catch (Exception) {
+                return false;
             }
-            return num;
+
+            if (num < 1) return false;
+            return true;
         }
 
         static List<int> AddNumToList(List<int> list) {
@@ -65,14 +82,14 @@ namespace LINQ_Tasks {
             string[] strArray;
             do {
                 Console.Write("Введите строки через пробелы: ");
-   
+
                 strArray = Console.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
-             
+
                 for (int i = 0; i < strArray.Length; i++) {
                     list.Add(strArray[i]);
                 }
             } while (IsListEmpty(list));
-            
+
             return list;
         }
 
@@ -90,12 +107,12 @@ namespace LINQ_Tasks {
         }
 
         static bool IsListEmpty<T>(List<T> list) {
-            if(list.Count == 0) {
+            if (list.Count == 0) {
                 return true;
             } else {
                 return false;
             }
-            
+
         }
         #endregion
 
@@ -128,7 +145,7 @@ namespace LINQ_Tasks {
             sequence = AddNumToList(sequence);
 
             OutputList<int>(sequence);
-            
+
             int n = EnterDigit();
             Console.WriteLine(sequence.FirstOrDefault(i => (i % 10 == n)));
         }
@@ -143,8 +160,7 @@ namespace LINQ_Tasks {
              * Указание.Для обработки ситуации, связанной с отсутствием
              * требуемых строк, использовать операцию ??.
              */
-            Console.Write("Введите целое число больше ноля: ");
-            int n = Convert.ToInt32(Console.ReadLine());
+            int n = EnterPositiveInteger();
 
             List<string> list = EnterStringSequence();
 
@@ -292,7 +308,7 @@ namespace LINQ_Tasks {
             List<int> sequence = new List<int>();
 
             sequence = AddNumToList(sequence);
-            
+
             OutputList(sequence);
 
             try {

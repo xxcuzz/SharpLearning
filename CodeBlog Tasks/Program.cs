@@ -44,7 +44,6 @@ namespace CodeBlog_Tasks {
 
             List<int> NodArray = new List<int>();
             
-            Console.WriteLine("Введите натуральное число: ");
             int n = PositiveInteger();
            
             NodArray = NodArrayCalculate(n, NodArray);
@@ -80,10 +79,11 @@ namespace CodeBlog_Tasks {
             return NodArray;
         }
         
-
         static int PositiveInteger() {
             int n;
+           
             do {
+                Console.WriteLine("Введите натуральное число: ");
                 n = NumberInput();
             } while (n <= 0);
 
