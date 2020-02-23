@@ -1,15 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-/*
 
-
-
-LinqBegin6. 
-LinqBegin7. 
-LinqBegin8. 
-LinqBegin9. 
-*/
 namespace LINQ_Tasks {
     class Program {
         static void Main(string[] args) {
@@ -18,8 +10,8 @@ namespace LINQ_Tasks {
             //Linq3();
             //Linq4();
             
-            Linq5();
-            //Linq6();
+            //Linq5();
+            Linq6();
             //Linq7();
             //Linq8();
             //Linq9();
@@ -171,7 +163,23 @@ namespace LINQ_Tasks {
          * и при этом начинаются и оканчиваются символом C.
          */
         static void Linq5() {
+            Console.Write("Введите символ: ");
+            char c = Convert.ToChar(Console.ReadLine());
 
+            Console.Write("Введите строки через пробелы: ");
+
+            char separator = ' ';
+            string[] strArray = Console.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+
+            List<string> list = new List<string>();
+
+            for (int i = 0; i < strArray.Length; i++) {
+                list.Add(strArray[i]);
+            }
+
+            int result = list.Where(s=>s.Length>1 && s.EndsWith(c)).Count();
+
+            Console.WriteLine(result);
 
         }
         #endregion
