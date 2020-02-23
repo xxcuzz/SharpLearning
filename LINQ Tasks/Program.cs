@@ -14,7 +14,7 @@ namespace LINQ_Tasks {
             //Linq7();
             //Linq8();
             
-            //Linq9();
+            Linq9();
 
         }
 
@@ -46,6 +46,10 @@ namespace LINQ_Tasks {
         }
 
         static void OutputList<T>(List<T> list) {
+
+            if (list.Count == 0)
+                return;
+
             string str = null;
 
             foreach (var v in list) {
@@ -273,6 +277,17 @@ namespace LINQ_Tasks {
          * если последовательность не содержит положительных элементов
          */
         static void Linq9() {
+            List<int> sequence = new List<int>();
+
+            sequence = AddNumToList(sequence);
+            
+            OutputList(sequence);
+
+            try {
+                Console.WriteLine(sequence.Where(i => i > 0).Min());
+            } catch (Exception) {
+                Console.WriteLine(0);
+            }
 
         }
         #endregion
