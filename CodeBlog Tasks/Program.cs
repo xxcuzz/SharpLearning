@@ -18,16 +18,32 @@ namespace CodeBlog_Tasks {
                 Console.Clear();
             } while (!TaskNumberVaildation(res, input));
 
-            NewTask(res, input);   
+            NewTask(res, Convert.ToInt32(input));
+            
+            switch(input) {
+                case "1":
+                    Task1();
+                    break;
+                case "2":
+                    Task2();
+                    break;
+                case "3":
+                    Task3();
+                    break;
+            }
         }
-        static void NewTask(string fileText, string s) {
+        static void NewTask(string fileText, int s) {
             Console.Clear();
             int firstIndex = fileText.IndexOf("Task " + s);
 
-            int nextTask = Convert.ToInt32(s) + 1;
-            string next = fileText.Substring(fileText.IndexOf("Task " + nextTask));
-            int secondIndex = fileText.IndexOf(next);
-            Console.WriteLine(fileText.Substring(firstIndex, secondIndex));
+            string nextTask = "Task " + ++s;
+            int secondIndex = fileText.IndexOf(nextTask);
+
+            if(secondIndex == -1) {
+                Console.WriteLine(fileText.Substring(firstIndex));
+            } else {
+                Console.WriteLine(fileText.Substring(firstIndex, secondIndex - firstIndex));
+            }
         }
 
         static bool TaskNumberVaildation(string fileText, string userInput) {
@@ -106,7 +122,7 @@ namespace CodeBlog_Tasks {
             int n;
            
             do {
-                Console.WriteLine("Введите натуральное число: ");
+                Console.Write("Введите натуральное число: ");
                 n = NumberInput();
             } while (n <= 0);
 
@@ -116,11 +132,9 @@ namespace CodeBlog_Tasks {
 
         #region Task2_Completed
         static void Task2() {
-            Console.WriteLine("Определить делимость на 7 ряда целых чисел,\n записанных в двоичной системе счисления");
-
             List<int> list = new List<int>();
 
-            Console.WriteLine("Enter array of numbers in bin(n-stop): ");
+            Console.WriteLine("Введите массив бит(n-стоп): ");
 
             list = InputList(list);     //ввод двоичного списка
 
@@ -163,7 +177,6 @@ namespace CodeBlog_Tasks {
 
         #region Task3_Completed
         static void Task3() {
-            Console.WriteLine("Заданы первый и второй элементы арифметической прогрессии.\nТребуется написать программу, которая вычислит элемент прогрессии по её номеру");
             int first;
             int second;
             int sequenceNumber;
