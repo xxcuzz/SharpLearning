@@ -1,25 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace CodeBlog_Tasks {
     class Program {
         static void Main(string[] args) {
-            //Console.WriteLine("Enter task number(--info): ");
+            
+            string input;
+            using var sr = new StreamReader("Tasks.txt");
+            string res = sr.ReadToEnd();
+            do {
+                Console.WriteLine(res);
+                Console.WriteLine();
+                Console.Write("Введите номер задания: ");
+                input = Console.ReadLine();
+                Console.Clear();
+            } while (!TaskNumberVaildation(res, input));
 
-            //int taskNumber = NumberInput();
-            //string methodName = "Task" + taskNumber + "()";
-            //MethodInfo mi = GetMethod(methodName);
-            //mi?.Invoke();
-            //Console.WriteLine("Task 314 316");
+            NewTask(res, input);   
+        }
+        static void NewTask(string fileText, string s) {
+            Console.Clear();
+            int firstIndex = fileText.IndexOf("Task " + s);
 
-            Task309();
-            //Task314();
-            //Task316();
-
+            int nextTask = Convert.ToInt32(s) + 1;
+            string next = fileText.Substring(fileText.IndexOf("Task " + nextTask));
+            int secondIndex = fileText.IndexOf(next);
+            Console.WriteLine(fileText.Substring(firstIndex, secondIndex));
         }
 
+        static bool TaskNumberVaildation(string fileText, string userInput) {
+            int num;
+
+            if(!Int32.TryParse(userInput, out num)) {
+                Console.WriteLine("Ошибка. Введите число!");
+                Console.WriteLine("-----------------------------");
+                return false;
+            }
+
+            if (!fileText.Contains("Task " + userInput)) {
+                Console.WriteLine("Ошибка. Такого задания нет");
+                Console.WriteLine("-----------------------------");
+                return false;
+            }
+
+            return true;
+        }
         static int NumberInput() {
             int num;
             while (!Int32.TryParse(Console.ReadLine(), out num)) {
@@ -36,12 +63,8 @@ namespace CodeBlog_Tasks {
             Console.WriteLine("");
         }
 
-        #region Task309_Completed
-        static void Task309() {
-            /*Дано натуральное число N. Представить его в виде суммы двух
-             * натуральных чисел таких, что  НОД этих чисел - максимален
-             */
-
+        #region Task1_Completed
+        static void Task1() {
             List<int> NodArray = new List<int>();
             
             int n = PositiveInteger();
@@ -89,34 +112,10 @@ namespace CodeBlog_Tasks {
 
             return n;
         }
-
         #endregion
 
-        #region Task310
-        static void Task310() {
-            /*Из шахматной доски по границам клеток выпилили связную
-             * (не распадающуюся на части) фигуру без дыр
-             * Найти её периметр
-             */
-
-
-        }
-        #endregion
-
-        #region Task312
-        static void Task312() {
-            //Найти все целые X, удовлетворяющие уравнению
-            //A*X^3 + B*X^2 + C*X + D = 0
-            //где A B C D - заданные целые коэффициенты
-
-
-        }
-        #endregion
-
-        #region Task314_Completed
-        static void Task314() {
-            //Определить делимость на 7 ряда целых чисел,
-            //записанных в двоичной системе счисления
+        #region Task2_Completed
+        static void Task2() {
             Console.WriteLine("Определить делимость на 7 ряда целых чисел,\n записанных в двоичной системе счисления");
 
             List<int> list = new List<int>();
@@ -162,10 +161,8 @@ namespace CodeBlog_Tasks {
 
         #endregion
 
-        #region Task316_Completed
-        static void Task316() {
-            //Заданы первый и второй элементы арифметической прогрессии. 
-            //Требуется написать программу, которая вычислит элемент прогрессии по её номеру
+        #region Task3_Completed
+        static void Task3() {
             Console.WriteLine("Заданы первый и второй элементы арифметической прогрессии.\nТребуется написать программу, которая вычислит элемент прогрессии по её номеру");
             int first;
             int second;
@@ -181,17 +178,15 @@ namespace CodeBlog_Tasks {
             do {
                 sequenceNumber = NumberInput();
             } while (sequenceNumber < 1);
-            Console.WriteLine(Task316_Inner(first, second, sequenceNumber));
+            Console.WriteLine(Task3_Inner(first, second, sequenceNumber));
         }
 
-        static int Task316_Inner(int first, int second, int sequenceNumber) {
+        static int Task3_Inner(int first, int second, int sequenceNumber) {
             int difference = second - first;
             int result = difference * sequenceNumber - (difference + Math.Abs(first));
 
             return result;
         }
         #endregion
-
-
     }
 }
