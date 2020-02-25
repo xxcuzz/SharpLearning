@@ -36,15 +36,15 @@ namespace CodeBlog_Tasks {
                 string methodName = "Task" + input;
                 Type typeOfTClass = t.GetType();
                 foreach (var m in typeOfTClass.GetMethods()) {
-                    if(m.Name == methodName) {
+                    if (m.Name == methodName) {
                         MethodInfo mi = typeof(T).GetMethod(m.Name);
                         Delegate test = Delegate.CreateDelegate(typeof(delMethod), t, mi);
                         method = (delMethod)test;
                         method?.Invoke();
                     }
-                } 
+                }
             }
-            
+
             void OutputTaskText(string fileText, int s) {
                 Console.Clear();
                 int firstIndex = fileText.IndexOf("Task " + s);
@@ -76,7 +76,7 @@ namespace CodeBlog_Tasks {
 
                 return true;
             }
-        }        
+        }
     }
 
     class T {
@@ -111,7 +111,7 @@ namespace CodeBlog_Tasks {
 
 
             List<int> NodArray = new List<int>();
-            int n = PositiveInteger();
+            int n = NumberInput();
 
             if (n == 1) {
                 Console.WriteLine("Число 1 нельзя))");
@@ -119,7 +119,7 @@ namespace CodeBlog_Tasks {
             }
 
             NodArray = NodArrayCalculate(n, NodArray);
-            MaxNodCalculate(NodArray[0], n, out _, out _);        
+            MaxNodCalculate(NodArray[0], n, out _, out _);
         }
 
         public void Task2() {
@@ -148,45 +148,37 @@ namespace CodeBlog_Tasks {
         }
 
         public void Task3() {
+
             int first;
             int second;
             int sequenceNumber;
-            do {
-                Console.WriteLine("Введите первый элемент арифметической прогрессии:");
-                first = NumberInput();
-                Console.WriteLine("Введите второй элемент арифметической прогрессии:");
-                second = NumberInput();
-            } while (second <= first);
+
+            int result;
+            static int Calculate(int f, int s, int num) {
+                int difference = s - f;
+
+                if (f < 0) {
+                    return difference * num - (difference + Math.Abs(f));
+                } else {
+                    return difference * num - (difference - f);
+                }
+            }
+
+            Console.WriteLine("Введите первый элемент арифметической прогрессии:");
+            first = NumberInput();
+            Console.WriteLine("Введите второй элемент арифметической прогрессии:");
+            second = NumberInput();
 
             Console.WriteLine("Введите номер элемента:");
             do {
                 sequenceNumber = NumberInput();
             } while (sequenceNumber < 1);
 
-            int difference;
-            int result;
-
-            difference = second - first;
-
-            if (first < 0) {
-                result = difference * sequenceNumber - (difference + Math.Abs(first));
-            } else {
-                result = difference * sequenceNumber - (difference - first);
-            }
-
-            Console.WriteLine("Число: " + result);
+            result = Calculate(first, second, sequenceNumber);
+            Console.WriteLine("Число: " + result);   
         }
- 
-        protected int PositiveInteger() {
-            int n;
 
-            do {
-                Console.Write("Введите натуральное число: ");
-                n = NumberInput();
-            } while (n <= 0);
 
-            return n;
-        }        
         protected List<int> InputList(List<int> list) {
             string input;
 
