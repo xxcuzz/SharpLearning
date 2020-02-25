@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace CodeBlog_Tasks {
     class Program {
-        static void Main(string[] args) {  
+        public delegate void delMethod();
+        static void Main(string[] args) {
+
+            T t = new T();
+            string input;
+            using var sr = new StreamReader("Tasks.txt");
+            string res = sr.ReadToEnd();
+
             do {
                 Console.Clear();
-                Tasks();
-                Console.Write("Ещё задания: \"Y\". Для выхода введите любой символ:");
-            } while(Console.ReadLine() == "Y");
-
-            static void Tasks() {
-                string input;
-                using var sr = new StreamReader("Tasks.txt");
-                string res = sr.ReadToEnd();
-
                 do {
                     Console.WriteLine(res);
                     Console.WriteLine();
@@ -25,126 +24,118 @@ namespace CodeBlog_Tasks {
                     Console.Clear();
                 } while (!TaskNumberVaildation(res, input));
 
-                NewTask(res, Convert.ToInt32(input));
+                OutputTaskText(res, Convert.ToInt32(input));
 
-                switch (input) {
-                    case "1":
-                        Task1();
-                        break;
-                    case "2":
-                        Task2();
-                        break;
-                    case "3":
-                        Task3();
-                        break;
+                CreateTask();
+
+                Console.Write("Ещё задания: \"Y\". Для выхода введите любой символ:");
+            } while (Console.ReadLine() == "Y");
+
+            void CreateTask() {
+                delMethod method;
+                string methodName = "Task" + input;
+                Type ti = t.GetType();
+                foreach (var m in ti.GetMethods()) {
+                    if(m.Name == methodName) {
+                        MethodInfo mi = typeof(T).GetMethod(m.Name);
+                        Delegate test = Delegate.CreateDelegate(typeof(delMethod), t, mi);
+                        method = (delMethod)test;
+                        method.Invoke();
+                    }
+                } 
+            }
+            
+            void OutputTaskText(string fileText, int s) {
+                Console.Clear();
+                int firstIndex = fileText.IndexOf("Task " + s);
+
+                string nextTask = "Task " + ++s;
+                int secondIndex = fileText.IndexOf(nextTask);
+
+                if (secondIndex == -1) {
+                    Console.WriteLine(fileText.Substring(firstIndex));
+                } else {
+                    Console.WriteLine(fileText.Substring(firstIndex, secondIndex - firstIndex));
                 }
             }
-        }
-        static void NewTask(string fileText, int s) {
-            Console.Clear();
-            int firstIndex = fileText.IndexOf("Task " + s);
 
-            string nextTask = "Task " + ++s;
-            int secondIndex = fileText.IndexOf(nextTask);
+            bool TaskNumberVaildation(string fileText, string userInput) {
+                int num;
 
-            if(secondIndex == -1) {
-                Console.WriteLine(fileText.Substring(firstIndex));
-            } else {
-                Console.WriteLine(fileText.Substring(firstIndex, secondIndex - firstIndex));
+                if (!Int32.TryParse(userInput, out num)) {
+                    Console.WriteLine("Ошибка. Введите число!");
+                    Console.WriteLine("-----------------------------");
+                    return false;
+                }
+
+                if (!fileText.Contains("Task " + userInput)) {
+                    Console.WriteLine("Ошибка. Такого задания нет");
+                    Console.WriteLine("-----------------------------");
+                    return false;
+                }
+
+                return true;
             }
-        }
+        }        
+    }
 
-        static bool TaskNumberVaildation(string fileText, string userInput) {
-            int num;
-
-            if(!Int32.TryParse(userInput, out num)) {
-                Console.WriteLine("Ошибка. Введите число!");
-                Console.WriteLine("-----------------------------");
-                return false;
+    class T {
+        public void Task1() {
+            void MaxNodCalculate(int na, int n, out int f, out int s) {
+                s = 0;
+                for (f = 0; f < n / 2; f++) {
+                    f = n - na;
+                    s = n - f;
+                    if (Nod(f, s) == na) {
+                        Console.WriteLine($"Первое число: {f}, второе число: {s}");
+                    }
+                }
+            }
+            int Nod(int a, int b) {
+                for (int i = a; i > 0; i--) {
+                    if (a % i == 0) {
+                        if (b % i == 0) {
+                            return i;
+                        }
+                    }
+                }
+                return -1;
+            }
+            List<int> NodArrayCalculate(int n, List<int> NodArray) {
+                for (int i = n / 2; i > 0; i--) {
+                    if (n % i == 0)
+                        NodArray.Add(i);
+                }
+                return NodArray;
             }
 
-            if (!fileText.Contains("Task " + userInput)) {
-                Console.WriteLine("Ошибка. Такого задания нет");
-                Console.WriteLine("-----------------------------");
-                return false;
-            }
 
-            return true;
-        }
-        static int NumberInput() {
-            int num;
-            while (!Int32.TryParse(Console.ReadLine(), out num)) {
-                string input = Console.ReadLine();
-            }
-            return num;
-        }
-
-        static void OutputList(List<int> list) {
-            Console.Write("List: ");
-            foreach (var l in list) {
-                Console.Write(l + " ");
-            }
-            Console.WriteLine("");
-        }
-
-        #region Task1_Completed
-        static void Task1() {
             List<int> NodArray = new List<int>();
-            
             int n = PositiveInteger();
 
             if (n == 1) {
                 Console.WriteLine("Число 1 нельзя))");
                 return;
             }
-           
+
             NodArray = NodArrayCalculate(n, NodArray);
-            MaxNodCalculate(NodArray[0], n, out _, out _);     
+            MaxNodCalculate(NodArray[0], n, out _, out _);        
         }
 
-        static void MaxNodCalculate(int na, int n, out int f, out int s) {
-            s = 0;
-            for(f=0; f<n/2; f++) { 
-                f = n - na;
-                s = n - f;
-                if (Nod(f, s) == na) {
-                    Console.WriteLine($"Первое число: {f}, второе число: {s}");
-                }
-            }
-        }
-
-        static int Nod(int a, int b) {
-            for (int i = a; i > 0; i--) {
-                if (a % i == 0) {
-                    if (b % i == 0) {
-                        return i;
+        public void Task2() {
+            List<int> DivisibilityBySeven(List<int> list) {
+                List<int> DividedBySeven = new List<int>();
+                int seven = 7;
+                foreach (var l in list) {
+                    if (Convert.ToInt32(Convert.ToString(l), 2) % seven == 0) {
+                        DividedBySeven.Add(l);
                     }
                 }
-            }
-            return -1;
-        }
-        static List<int> NodArrayCalculate(int n, List<int> NodArray) {
-            for(int i = n/2; i > 0; i--) {
-                if (n % i == 0)
-                    NodArray.Add(i);
-            }
-            return NodArray;
-        }
-        
-        static int PositiveInteger() {
-            int n;
-           
-            do {
-                Console.Write("Введите натуральное число: ");
-                n = NumberInput();
-            } while (n <= 0);
+                return DividedBySeven;
 
-            return n;
-        }
-        #endregion
+            }
 
-        #region Task2_Completed
-        static void Task2() {
+
             List<int> list = new List<int>();
 
             Console.WriteLine("Введите массив бит(n-стоп): ");
@@ -156,40 +147,7 @@ namespace CodeBlog_Tasks {
             OutputList(DivisibilityBySeven(list));
         }
 
-        static List<int> DivisibilityBySeven(List<int> list) {
-            List<int> DividedBySeven = new List<int>();
-            int seven = 7;
-            foreach (var l in list) {
-                if (Convert.ToInt32(Convert.ToString(l), 2) % seven == 0) {
-                    DividedBySeven.Add(l);
-                }
-            }
-            return DividedBySeven;
-
-        }
-        static List<int> InputList(List<int> list) {
-            string input;
-
-            while (true) {
-                input = Console.ReadLine();
-
-                if (input == "n" && list.Any())
-                    return list;
-
-                if (Int32.TryParse(input, out int num) && IsBinary(input)) {
-                    list.Add(num);
-                }
-            }
-        }
-
-        static bool IsBinary(string s) {
-            return s.All(c => c == '1' || c == '0');
-        }
-
-        #endregion
-
-        #region Task3_Completed
-        static void Task3() {
+        public void Task3() {
             int first;
             int second;
             int sequenceNumber;
@@ -204,10 +162,7 @@ namespace CodeBlog_Tasks {
             do {
                 sequenceNumber = NumberInput();
             } while (sequenceNumber < 1);
-            Console.WriteLine("Число: " + Task3_Inner(first, second, sequenceNumber));
-        }
 
-        static int Task3_Inner(int first, int second, int sequenceNumber) {
             int difference;
             int result;
 
@@ -219,8 +174,49 @@ namespace CodeBlog_Tasks {
                 result = difference * sequenceNumber - (difference - first);
             }
 
-            return result;
+            Console.WriteLine("Число: " + result);
         }
-        #endregion
+ 
+        protected int PositiveInteger() {
+            int n;
+
+            do {
+                Console.Write("Введите натуральное число: ");
+                n = NumberInput();
+            } while (n <= 0);
+
+            return n;
+        }        
+        protected List<int> InputList(List<int> list) {
+            string input;
+
+            while (true) {
+                input = Console.ReadLine();
+
+                if (input == "n" && list.Any())
+                    return list;
+
+                if (Int32.TryParse(input, out int num) && IsBinary(input)) {
+                    list.Add(num);
+                }
+            }
+        }
+        protected bool IsBinary(string s) {
+            return s.All(c => c == '1' || c == '0');
+        }
+        protected int NumberInput() {
+            int num;
+            while (!Int32.TryParse(Console.ReadLine(), out num)) {
+                string input = Console.ReadLine();
+            }
+            return num;
+        }
+        protected void OutputList(List<int> list) {
+            Console.Write("List: ");
+            foreach (var l in list) {
+                Console.Write(l + " ");
+            }
+            Console.WriteLine("");
+        }
     }
 }
