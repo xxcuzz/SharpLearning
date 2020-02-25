@@ -5,31 +5,39 @@ using System.Linq;
 
 namespace CodeBlog_Tasks {
     class Program {
-        static void Main(string[] args) {
-            
-            string input;
-            using var sr = new StreamReader("Tasks.txt");
-            string res = sr.ReadToEnd();
+        static void Main(string[] args) {  
             do {
-                Console.WriteLine(res);
-                Console.WriteLine();
-                Console.Write("Введите номер задания: ");
-                input = Console.ReadLine();
                 Console.Clear();
-            } while (!TaskNumberVaildation(res, input));
+                Tasks();
+                Console.Write("Ещё задания: \"Y\". Для выхода введите любой символ:");
+            } while(Console.ReadLine() == "Y");
 
-            NewTask(res, Convert.ToInt32(input));
-            
-            switch(input) {
-                case "1":
-                    Task1();
-                    break;
-                case "2":
-                    Task2();
-                    break;
-                case "3":
-                    Task3();
-                    break;
+            static void Tasks() {
+                string input;
+                using var sr = new StreamReader("Tasks.txt");
+                string res = sr.ReadToEnd();
+
+                do {
+                    Console.WriteLine(res);
+                    Console.WriteLine();
+                    Console.Write("Введите номер задания: ");
+                    input = Console.ReadLine();
+                    Console.Clear();
+                } while (!TaskNumberVaildation(res, input));
+
+                NewTask(res, Convert.ToInt32(input));
+
+                switch (input) {
+                    case "1":
+                        Task1();
+                        break;
+                    case "2":
+                        Task2();
+                        break;
+                    case "3":
+                        Task3();
+                        break;
+                }
             }
         }
         static void NewTask(string fileText, int s) {
