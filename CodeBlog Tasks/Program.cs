@@ -84,6 +84,7 @@ namespace CodeBlog_Tasks {
             List<int> NodArray = new List<int>();
             
             int n = PositiveInteger();
+
             if (n == 1) {
                 Console.WriteLine("Число 1 нельзя))");
                 return;
@@ -195,12 +196,20 @@ namespace CodeBlog_Tasks {
             do {
                 sequenceNumber = NumberInput();
             } while (sequenceNumber < 1);
-            Console.WriteLine(Task3_Inner(first, second, sequenceNumber));
+            Console.WriteLine("Число: " + Task3_Inner(first, second, sequenceNumber));
         }
 
         static int Task3_Inner(int first, int second, int sequenceNumber) {
-            int difference = second - first;
-            int result = difference * sequenceNumber - (difference + Math.Abs(first));
+            int difference;
+            int result;
+
+            difference = second - first;
+
+            if (first < 0) {
+                result = difference * sequenceNumber - (difference + Math.Abs(first));
+            } else {
+                result = difference * sequenceNumber - (difference - first);
+            }
 
             return result;
         }
