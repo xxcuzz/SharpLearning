@@ -34,13 +34,13 @@ namespace CodeBlog_Tasks {
             void CreateTask() {
                 delMethod method;
                 string methodName = "Task" + input;
-                Type ti = t.GetType();
-                foreach (var m in ti.GetMethods()) {
+                Type typeOfTClass = t.GetType();
+                foreach (var m in typeOfTClass.GetMethods()) {
                     if(m.Name == methodName) {
                         MethodInfo mi = typeof(T).GetMethod(m.Name);
                         Delegate test = Delegate.CreateDelegate(typeof(delMethod), t, mi);
                         method = (delMethod)test;
-                        method.Invoke();
+                        method?.Invoke();
                     }
                 } 
             }
