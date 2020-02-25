@@ -84,6 +84,10 @@ namespace CodeBlog_Tasks {
             List<int> NodArray = new List<int>();
             
             int n = PositiveInteger();
+            if (n == 1) {
+                Console.WriteLine("Число 1 нельзя))");
+                return;
+            }
            
             NodArray = NodArrayCalculate(n, NodArray);
             MaxNodCalculate(NodArray[0], n, out _, out _);     
@@ -95,7 +99,7 @@ namespace CodeBlog_Tasks {
                 f = n - na;
                 s = n - f;
                 if (Nod(f, s) == na) {
-                    Console.WriteLine($"First number: {f}, second number: {s}");
+                    Console.WriteLine($"Первое число: {f}, второе число: {s}");
                 }
             }
         }
@@ -181,13 +185,13 @@ namespace CodeBlog_Tasks {
             int second;
             int sequenceNumber;
             do {
-                Console.WriteLine("Enter first number of arithmetic progression:");
+                Console.WriteLine("Введите первый элемент арифметической прогрессии:");
                 first = NumberInput();
-                Console.WriteLine("Enter second number of arithmetic progression:");
+                Console.WriteLine("Введите второй элемент арифметической прогрессии:");
                 second = NumberInput();
             } while (second <= first);
 
-            Console.WriteLine("Enter number in arithmetic progression:");
+            Console.WriteLine("Введите номер элемента:");
             do {
                 sequenceNumber = NumberInput();
             } while (sequenceNumber < 1);
